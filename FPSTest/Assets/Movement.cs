@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour
 
     private Vector2 moveInput;
     private Vector2 mouseInput;
+    private bool jumpInput;
 
     private Vector3 verticalMotion;
     public float GRAVITY;
@@ -47,6 +48,8 @@ public class Movement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
 
+    public void OnJump(InputAction.CallbackContext ctx) => jumpInput = ctx.ReadValueAsButton();
+
     // Update is called once per frame
     void Update()
     {
@@ -63,8 +66,9 @@ public class Movement : MonoBehaviour
         verticalMotion += Vector3.down * GRAVITY * Time.deltaTime;
         if (controller.isGrounded) verticalMotion = Vector3.down;
 
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        if (jumpInput && controller.isGrounded)
         {
+            Debug.Log("jump");
             verticalMotion = Vector3.up * jumpForce;
         }
 
