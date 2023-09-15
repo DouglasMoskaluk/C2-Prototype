@@ -191,7 +191,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2754795736961326518}
         m_TargetAssemblyTypeName: Movement, Assembly-CSharp
         m_MethodName: OnFire
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

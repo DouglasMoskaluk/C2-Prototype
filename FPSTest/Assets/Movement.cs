@@ -54,11 +54,14 @@ public class Movement : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext ctx) => jumpInput = ctx.ReadValueAsButton();
 
-    public void OnFire()
+    public void OnFire(InputAction.CallbackContext ctx)
     {
-        if (fireCDTimer < 0.25f) { return; }
-        Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-        fireCDTimer = 0;
+        if (fireCDTimer >= 0.25f && ctx.performed)
+        {
+            Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+            fireCDTimer = 0;
+        }
+
     }
 
     // Update is called once per frame
