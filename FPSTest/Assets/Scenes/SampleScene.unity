@@ -953,7 +953,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2048745181}
   - component: {fileID: 2048745180}
-  - component: {fileID: 2048745182}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -980,7 +979,7 @@ MonoBehaviour:
   m_PlayerJoinedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2048745182}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerJoin, Assembly-CSharp
         m_MethodName: OnPlayerJoin
         m_Mode: 1
@@ -1019,7 +1018,7 @@ MonoBehaviour:
     type: 3}
   m_SplitScreen: 1
   m_MaintainAspectRatioInSplitScreen: 0
-  m_FixedNumberOfSplitScreens: -1
+  m_FixedNumberOfSplitScreens: 2
   m_SplitScreenRect:
     serializedVersion: 2
     x: 0
@@ -1041,18 +1040,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2048745182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048745179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55da704dfb85d9c488c7816014a534e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

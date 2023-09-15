@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
 
     public float jumpForce;
 
-    Player1ControlsMap input;
+    public Player1ControlsMap input;
 
 
     private void Awake()

@@ -16,7 +16,7 @@ public class WeaponSocket : MonoBehaviour
 
     private void Awake()
     {
-        input = new Player1ControlsMap();
+        input = GetComponent<Movement>().input;
     }
     private void Start()
     {
