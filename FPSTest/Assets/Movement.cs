@@ -18,6 +18,10 @@ public class Movement : MonoBehaviour
     [SerializeField] private float verticalTopBounds;
     [SerializeField] private float verticalBottomBounds;
 
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform bulletSpawn;
+    private float fireCDTimer = 0f;
+
     private Vector2 moveInput;
     private Vector2 mouseInput;
     private bool jumpInput;
@@ -50,14 +54,22 @@ public class Movement : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext ctx) => jumpInput = ctx.ReadValueAsButton();
 
+    public void OnFire()
+    {
+        if (fireCDTimer < 0.25f) { return; }
+        Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+        fireCDTimer = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        fireCDTimer += Time.deltaTime;
         //moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         //mouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         //moveInput = input.Player1Controls.Movement.ReadValue<Vector2>();
         //mouseInput = input.Player1Controls.Look.ReadValue<Vector2>();
-        
+
         horizontalRotTrans.localEulerAngles += Vector3.up * mouseInput.x * mouseSense.x;
         verticalRotTrans.localEulerAngles += -Vector3.right * mouseInput.y * mouseSense.y;
 

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2754795736961326517}
   - component: {fileID: 2754795736961326516}
   - component: {fileID: 2754795736961326518}
-  - component: {fileID: 2754795736961326519}
   - component: {fileID: 4551683833893879248}
   m_Layer: 0
   m_Name: Player
@@ -108,23 +107,11 @@ MonoBehaviour:
   mouseSense: {x: 0.6, y: 0.6}
   verticalTopBounds: 70
   verticalBottomBounds: 70
-  GRAVITY: 9.8
-  jumpForce: 4.8
---- !u!114 &2754795736961326519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2754795736961326514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1b5b803435954d42a66237d452d77c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7388848705729224838, guid: 259de25ee75adc544ba0e2aa0693b243,
     type: 3}
   bulletSpawn: {fileID: 2754795737852147908}
+  GRAVITY: 9.8
+  jumpForce: 4.8
 --- !u!114 &4551683833893879248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +187,19 @@ MonoBehaviour:
     m_ActionId: 749b3273-12cd-433e-9e4f-61fd9fec0d8a
     m_ActionName: Player1Controls/Look[/DualShock4GamepadHID/rightStick]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2754795736961326518}
+        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+        m_MethodName: OnFire
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6428faf7-a3e9-48d9-9e96-ddc37c0deb4d
     m_ActionName: Player1Controls/Fire[/DualShock4GamepadHID/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 0

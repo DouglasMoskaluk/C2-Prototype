@@ -20,7 +20,7 @@ public class WeaponSocket : MonoBehaviour
     }
     private void Start()
     {
-        weaponSocket = new Pistol().Innit(bulletPrefab, bulletSpawn);
+        //weaponSocket = new Pistol().Innit(bulletPrefab, bulletSpawn);
         
     }
 
