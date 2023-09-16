@@ -71,12 +71,12 @@ public class Movement : MonoBehaviour
 
     public void OnSlideToggle(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed)//start of hold
         {
             Debug.Log("Slide performed");
             isSlidingPressed = true;
         }
-        else if (ctx.canceled)
+        else if (ctx.canceled)//end of hold
         {
             Debug.Log("Slide cancelled");
             isSlidingPressed = false;
