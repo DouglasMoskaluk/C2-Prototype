@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "Hold(duration=0.1)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "6f37edf4-9785-4bb1-913d-dacabde9b801",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -203,6 +212,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "882a26c1-b2ba-42f0-af11-207f3b530640",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

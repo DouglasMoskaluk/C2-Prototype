@@ -11,7 +11,11 @@ public class Movement : MonoBehaviour
 
     private float lookSenses = 0.6f;
 
-    [SerializeField] private float speed = 7f;
+    public float speed;
+    [SerializeField] private float walkSpeed = 7f;
+    [SerializeField] private float runSpeed = 12f;
+    [SerializeField] private float crouchSpeed = 4f;
+
     [SerializeField] private Transform horizontalRotTrans;
     [SerializeField] private Transform verticalRotTrans;
     [SerializeField] private Vector2 mouseSense;
@@ -33,6 +37,8 @@ public class Movement : MonoBehaviour
 
     public Player1ControlsMap input;
 
+    public bool isRunningToggled = false;
+
     public bool isSlidingPressed = false;
     private float standingHeight = 2f;
     private float standingRadius = 0.5f;
@@ -51,6 +57,7 @@ public class Movement : MonoBehaviour
         cam = Camera.main;
 
         Cursor.lockState = CursorLockMode.Locked;
+        speed = walkSpeed;
     }
 
     public void OnLook(InputAction.CallbackContext ctx) => mouseInput = ctx.ReadValue<Vector2>();
@@ -58,6 +65,14 @@ public class Movement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
 
     public void OnJump(InputAction.CallbackContext ctx) => jumpInput = ctx.ReadValueAsButton();
+
+    public void OnRunToggle(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) {
+            Debug.Log("toggle run");
+            isRunningToggled = !isRunningToggled; 
+        }
+    }
 
     public void OnFire(InputAction.CallbackContext ctx)
     {
@@ -86,17 +101,25 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (moveInput.magnitude <= 0.3f && isRunningToggled) { isRunningToggled = false; }
+
         fireCDTimer += Time.deltaTime;
 
-        if (isSlidingPressed)//should be a ground check here but it messed with the slide, downward force should be applied in real game but i dont wanna do that here so fuck yall bing bong
+        if (isRunningToggled)//runnning
         {
+            controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 18);
+            controller.radius = standingRadius;
+            speed = runSpeed;
+        }
+        else if (isSlidingPressed)// sliding
+        {//should be a ground check here but it messed with the slide, downward force should be applied in real game but i dont wanna do that here so fuck yall bing bong
             controller.height = Mathf.Lerp(controller.height, crouchingHeight, Time.deltaTime * 25);
             //controller.radius = Mathf.Lerp(controller.radius, crouchingRadius, Time.deltaTime * 15);
             controller.radius = crouchingRadius;
             moveInput.y = 1;
             speed = 12f;
         }
-        else
+        else//not running or sliding
         {
             controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 18);
             controller.radius = standingRadius;
