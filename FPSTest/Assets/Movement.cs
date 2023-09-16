@@ -88,7 +88,7 @@ public class Movement : MonoBehaviour
     {
         fireCDTimer += Time.deltaTime;
 
-        if (isSlidingPressed)
+        if (isSlidingPressed)//should be a ground check here but it messed with the slide, downward force should be applied in real game but i dont wanna do that here so fuck yall bing bong
         {
             controller.height = Mathf.Lerp(controller.height, crouchingHeight, Time.deltaTime * 25);
             //controller.radius = Mathf.Lerp(controller.radius, crouchingRadius, Time.deltaTime * 15);
