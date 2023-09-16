@@ -62,6 +62,15 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""74b5e24e-6439-4b10-8793-6d203ce9bb81"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.1)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -108,6 +117,17 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c2efcdd-78c5-4245-912d-b74e002101ac"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +140,7 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
         m_Player1Controls_Jump = m_Player1Controls.FindAction("Jump", throwIfNotFound: true);
         m_Player1Controls_Look = m_Player1Controls.FindAction("Look", throwIfNotFound: true);
         m_Player1Controls_Fire = m_Player1Controls.FindAction("Fire", throwIfNotFound: true);
+        m_Player1Controls_Slide = m_Player1Controls.FindAction("Slide", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,6 +206,7 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1Controls_Jump;
     private readonly InputAction m_Player1Controls_Look;
     private readonly InputAction m_Player1Controls_Fire;
+    private readonly InputAction m_Player1Controls_Slide;
     public struct Player1ControlsActions
     {
         private @Player1ControlsMap1 m_Wrapper;
@@ -193,6 +215,7 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player1Controls_Jump;
         public InputAction @Look => m_Wrapper.m_Player1Controls_Look;
         public InputAction @Fire => m_Wrapper.m_Player1Controls_Fire;
+        public InputAction @Slide => m_Wrapper.m_Player1Controls_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Player1Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +237,9 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
         }
 
         private void UnregisterCallbacks(IPlayer1ControlsActions instance)
@@ -230,6 +256,9 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
         }
 
         public void RemoveCallbacks(IPlayer1ControlsActions instance)
@@ -253,5 +282,6 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
 }

@@ -112,6 +112,7 @@ MonoBehaviour:
   bulletSpawn: {fileID: 2754795737852147908}
   GRAVITY: 9.8
   jumpForce: 4.8
+  isSlidingPressed: 0
 --- !u!114 &4551683833893879248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +203,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6428faf7-a3e9-48d9-9e96-ddc37c0deb4d
     m_ActionName: Player1Controls/Fire[/DualShock4GamepadHID/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2754795736961326518}
+        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+        m_MethodName: OnSlideToggle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 74b5e24e-6439-4b10-8793-6d203ce9bb81
+    m_ActionName: Player1Controls/Slide[/DualShock4GamepadHID/buttonEast,/XInputControllerWindows/buttonEast,/DualSenseGamepadHID/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player1Controls

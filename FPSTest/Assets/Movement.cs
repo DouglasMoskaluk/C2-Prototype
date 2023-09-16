@@ -33,6 +33,11 @@ public class Movement : MonoBehaviour
 
     public Player1ControlsMap input;
 
+    public bool isSlidingPressed = false;
+    private float standingHeight = 2f;
+    private float standingRadius = 0.5f;
+    private float crouchingHeight = 0.6f;
+    private float crouchingRadius = 0.3f;
 
     private void Awake()
     {
@@ -64,14 +69,40 @@ public class Movement : MonoBehaviour
 
     }
 
+    public void OnSlideToggle(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            Debug.Log("Slide performed");
+            isSlidingPressed = true;
+        }
+        else if (ctx.canceled)
+        {
+            Debug.Log("Slide cancelled");
+            isSlidingPressed = false;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         fireCDTimer += Time.deltaTime;
-        //moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        //mouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        //moveInput = input.Player1Controls.Movement.ReadValue<Vector2>();
-        //mouseInput = input.Player1Controls.Look.ReadValue<Vector2>();
+
+        if (isSlidingPressed)
+        {
+            controller.height = Mathf.Lerp(controller.height, crouchingHeight, Time.deltaTime * 25);
+            //controller.radius = Mathf.Lerp(controller.radius, crouchingRadius, Time.deltaTime * 15);
+            controller.radius = crouchingRadius;
+            moveInput.y = 1;
+            speed = 12f;
+        }
+        else
+        {
+            controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 18);
+            controller.radius = standingRadius;
+            speed = 7;
+            //controller.radius = Mathf.Lerp(controller.radius, standingRadius, Time.deltaTime * 20);
+        }
 
         horizontalRotTrans.localEulerAngles += Vector3.up * mouseInput.x * mouseSense.x;
         verticalRotTrans.localEulerAngles += -Vector3.right * mouseInput.y * mouseSense.y;
