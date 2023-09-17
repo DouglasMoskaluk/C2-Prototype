@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
+    public int playerHealth = 10;
+
     private CharacterController controller;
     private Rigidbody rb;
     private Camera cam;
@@ -174,5 +176,14 @@ public class Movement : MonoBehaviour
     private void OnDisable()
     {
         input.Player1Controls.Disable();
+    }
+
+    public void TakeDamage()
+    {
+        playerHealth = Mathf.Max(--playerHealth, 0);
+        if (playerHealth <= 0)
+        {
+            Debug.Log("Player is dead");
+        }
     }
 }
