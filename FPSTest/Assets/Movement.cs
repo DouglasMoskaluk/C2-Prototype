@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +48,9 @@ public class Movement : MonoBehaviour
     private float crouchingHeight = 0.6f;
     private float crouchingRadius = 0.3f;
 
+    public playerState currentState = playerState.stand;
+
+
     private void Awake()
     {
         input = new Player1ControlsMap();
@@ -72,7 +76,8 @@ public class Movement : MonoBehaviour
     {
         if (ctx.performed) {
             Debug.Log("toggle run");
-            isRunningToggled = !isRunningToggled; 
+            isRunningToggled = !isRunningToggled;
+            currentState = playerState.stand;
         }
     }
 
@@ -92,11 +97,13 @@ public class Movement : MonoBehaviour
         {
             Debug.Log("Slide performed");
             isSlidingPressed = true;
+            currentState = playerState.crouch;
         }
         else if (ctx.canceled)//end of hold
         {
             Debug.Log("Slide cancelled");
             isSlidingPressed = false;
+            currentState = playerState.stand;
         }
     }
 
@@ -107,42 +114,57 @@ public class Movement : MonoBehaviour
 
         fireCDTimer += Time.deltaTime;
 
-        if (isRunningToggled)//runnning
+        if (currentState == playerState.stand)
         {
             controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 18);
             controller.radius = standingRadius;
-            speed = runSpeed;
+
+            if (isRunningToggled)
+            {
+                speed = runSpeed;
+            }
+            else
+            {
+                speed = walkSpeed;
+            }
         }
-        else if (isSlidingPressed)// sliding
-        {//should be a ground check here but it messed with the slide, downward force should be applied in real game but i dont wanna do that here so fuck yall bing bong
+        else if (currentState == playerState.crouch)
+        {
             controller.height = Mathf.Lerp(controller.height, crouchingHeight, Time.deltaTime * 25);
-            //controller.radius = Mathf.Lerp(controller.radius, crouchingRadius, Time.deltaTime * 15);
             controller.radius = crouchingRadius;
-            moveInput.y = 1;
-            speed = 12f;
-        }
-        else//not running or sliding
-        {
-            controller.height = Mathf.Lerp(controller.height, standingHeight, Time.deltaTime * 18);
-            controller.radius = standingRadius;
-            speed = 7;
-            //controller.radius = Mathf.Lerp(controller.radius, standingRadius, Time.deltaTime * 20);
+
+            if (isSlidingPressed)
+            {
+                moveInput.y = 1;
+                speed = runSpeed;
+            }
+            else
+            {
+                speed = crouchSpeed;
+            }
         }
 
+        if (jumpInput && controller.isGrounded)
+        {
+            Debug.Log("jump");
+            verticalMotion = Vector3.up * jumpForce;
+            currentState = playerState.stand;
+        }
+
+        MoveCharcter();
+
+        
+    }
+
+    private void MoveCharcter()
+    {
         horizontalRotTrans.localEulerAngles += Vector3.up * mouseInput.x * mouseSense.x;
         verticalRotTrans.localEulerAngles += -Vector3.right * mouseInput.y * mouseSense.y;
 
         verticalRotTrans.localEulerAngles = ClampCameraXRot(verticalRotTrans.localEulerAngles, verticalBottomBounds, verticalTopBounds);
 
         verticalMotion += Vector3.down * GRAVITY * Time.deltaTime;
-        if (controller.isGrounded) verticalMotion = Vector3.down;
-
-        if (jumpInput && controller.isGrounded)
-        {
-            Debug.Log("jump");
-            verticalMotion = Vector3.up * jumpForce;
-        }
-
+        
         Vector3 movement = ((horizontalRotTrans.forward * moveInput.y) + (horizontalRotTrans.right * moveInput.x)).normalized * speed;
 
         movement += verticalMotion;
@@ -151,7 +173,7 @@ public class Movement : MonoBehaviour
 
         controller.Move(movement * Time.deltaTime);
 
-        
+        if (controller.isGrounded) verticalMotion = Vector3.down;
     }
 
     private Vector3 ClampCameraXRot(Vector3 vec, float upperBounds, float lowerBounds)
@@ -186,4 +208,10 @@ public class Movement : MonoBehaviour
             Debug.Log("Player is dead");
         }
     }
+}
+
+public enum playerState
+{
+   stand,
+   crouch
 }

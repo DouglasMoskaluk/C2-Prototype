@@ -207,7 +207,7 @@ public partial class @Player1ControlsMap1: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0353c46b-4b32-441a-b098-962052a54964"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
